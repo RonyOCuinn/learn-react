@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
-import Cockpit from '../components/Cockpit/Cockpit'
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    console.log('App.js constructor');
+  }
+
   state = {
     persons: [
       { id: 'ocuinr', name: 'Rónán', age: 28 },
@@ -11,6 +17,15 @@ class App extends Component {
       { id: 'foleo', name: 'Orla', age: 24 }
     ],
     showPersons: false
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    console.log('App.js getDerivedStateFromProps', props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('App.js componentDidMount');
   }
 
   togglePersonsHandler = () => {
@@ -42,6 +57,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('App.js render');
     let persons = null;
 
     if (this.state.showPersons) {
@@ -56,6 +72,7 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <Cockpit
+          title={this.props.appTitle}
           showPersons={this.state.showPersons}
           persons={this.state.persons}
           click={this.togglePersonsHandler}

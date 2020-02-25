@@ -1,32 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './Cockpit.module.css'
 
-const cockpit = (props) => {
-    const assignedClasses = [];
+const Cockpit = (props) => {
 
-    let btnClass = '';
-    
-    if(props.showPersons) {
-        btnClass = classes.Red;
-    }
+  useEffect(() => {
+    console.log("Cockpit.js useEffect")
+  });
 
-    if (props.persons.length <= 2) {
-      assignedClasses.push(classes.red);
-    }
+  const assignedClasses = [];
 
-    if (props.persons.length <= 1) {
-      assignedClasses.push(classes.bold);
-    }
+  let btnClass = '';
 
-    return (
-        <div className={classes.Cockpit}>
-            <h1>{props.title}</h1>
-            <p className={assignedClasses.join(' ')}>This works.</p>
-            <button
-                className={btnClass}
-                onClick={props.click}>View/Hide persons</button>
-        </div>
-    );
+  if (props.showPersons) {
+    btnClass = classes.Red;
+  }
+
+  if (props.persons.length <= 2) {
+    assignedClasses.push(classes.red);
+  }
+
+  if (props.persons.length <= 1) {
+    assignedClasses.push(classes.bold);
+  }
+
+  return (
+    <div className={classes.Cockpit}>
+      <h1>{props.title}</h1>
+      <p className={assignedClasses.join(' ')}>This works.</p>
+      <button
+        className={btnClass}
+        onClick={props.click}>View/Hide persons</button>
+    </div>
+  );
 };
 
-export default cockpit;
+export default Cockpit;

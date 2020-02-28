@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import Auxiliary from '../hoc/Auxiliary';
 
 class App extends Component {
 
@@ -12,12 +14,13 @@ class App extends Component {
 
   state = {
     persons: [
-      { id: 'ocuinr', name: 'Rónán', age: 28 },
+      { id: 'ocuinr', name: 'Rónán', age: '28' },
       { id: 'bleejs', name: 'Bleeks', age: 28 },
       { id: 'foleo', name: 'Orla', age: 24 }
     ],
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -61,8 +64,11 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({
-      persons: persons
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      }
     })
   }
 
@@ -80,7 +86,7 @@ class App extends Component {
     }
 
     return (
-      <div className={classes.App}>
+      <Auxiliary>
         <button onClick={() => { this.setState({ showCockpit: false }) }}>Remove Cockpit</button>
         {this.state.showCockpit ?
           <Cockpit
@@ -91,9 +97,9 @@ class App extends Component {
           />
           : null}
         {persons}
-      </div>
+      </Auxiliary>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
